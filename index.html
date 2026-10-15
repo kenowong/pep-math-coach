@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>人教版数学 · 章节同步教练</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">∑</span>
+      <div>
+        <div class="brand-title">章节同步教练</div>
+        <div class="brand-sub">人教版数学 · 主线 + 学法 + 技巧</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#/home" class="nav-link" data-route="home">章节主线</a>
+      <a href="#/oly" class="nav-link" data-route="oly">奥数题库</a>
+      <a href="#/methods" class="nav-link" data-route="methods">学习方法</a>
+      <a href="#/mistakes" class="nav-link" data-route="mistakes">错题复盘<span class="badge" id="mBadge">0</span></a>
+      <a href="#/review" class="nav-link" data-route="review">间隔复习<span class="badge" id="rBadge">0</span></a>
+      <a href="#/ai" class="nav-link" data-route="ai">AI诊断</a>
+      <a href="#/progress" class="nav-link" data-route="progress">我的进度</a>
+    </nav>
+  </header>
+
+  <main id="view" class="view"></main>
+
+  <!-- 返回顶部悬浮按钮 -->
+  <button id="toTop" type="button" title="返回顶部" aria-label="返回顶部">↑</button>
+
+  <!-- 打印专用区域（屏幕隐藏，打印时显示） -->
+  <div id="printArea" aria-hidden="true"></div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- 数据层：章节树 + 上次 127 解题方法库(MM_TECH) -->
+  <script src="js/knowledge.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/figures.js"></script>
+  <script src="js/master-methods.js"></script>
+  <!-- 动图引擎（SVG 交互演示） -->
+  <script src="js/animations.js"></script>
+  <!-- 参数化出题引擎（注册到 MM_TECH 的 qgen；并向 Fig 追加配图） -->
+  <script src="js/qgen.js"></script>
+  <script src="js/qgen_elementary_extra.js"></script>
+  <script src="js/qgen_junior.js"></script>
+  <script src="js/qgen_high.js"></script>
+  <!-- 学法库 + 技巧引擎 + 融入层 + 核心逻辑 -->
+  <script src="js/methods.js"></script>
+  <script src="js/techniques.js"></script>
+  <script src="js/integration.js"></script>
+  <!-- 奥数教材专题骨架（教材目录级分类与编号，须在 olympiad.js 之前加载） -->
+  <script src="js/oly-syllabus.js"></script>
+  <!-- 奥数题库（原创同题型，按教材 240 个专题组织，供 #/oly 使用） -->
+  <script src="js/olympiad.js"></script>
+  <!-- 二维码生成库（离线，供错题卷打印） -->
+  <script src="js/qrcode.min.js"></script>
+  <!-- 错题卷打印 + 扫码复核（压缩/编码/二维码/分批） -->
+  <script src="js/printscan.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

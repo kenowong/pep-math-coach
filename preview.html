@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>人教版数学·章节同步教练 —— 功能预览</title>
+<style>
+/* 人教版数学 · 章节同步教练 —— 样式（浅色、紧凑、移动端友好） */
+:root{
+  --blue:#2f6fed; --blue-d:#1a3a5f; --ok:#2e9e5b; --no:#e0533d;
+  --bg:#f3f6fc; --card:#fff; --line:#e3e9f3; --txt:#1f2937; --mut:#6b7787;
+  --shadow:0 1px 3px rgba(31,41,55,.08),0 4px 14px rgba(31,41,55,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--txt); font-size:15px; line-height:1.6;
+  -webkit-text-size-adjust:100%;
+}
+a{color:var(--blue);text-decoration:none}
+img,svg{max-width:100%}
+
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;
+  padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:9px}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+.brand-title{font-weight:700;font-size:15px;line-height:1.1}
+.brand-sub{font-size:11px;color:var(--mut)}
+.nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-link{position:relative;padding:7px 11px;border-radius:9px;color:var(--mut);font-size:13.5px;font-weight:600}
+.nav-link:hover{background:#eef3fc;color:var(--blue)}
+.nav-link.active{background:var(--blue);color:#fff}
+.badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;
+  background:var(--no);color:#fff;font-size:11px;line-height:17px;text-align:center;display:none}
+.badge.show{display:block}
+
+.view{max-width:880px;margin:0 auto;padding:16px 14px 70px}
+
+/* 通用 */
+.back{display:inline-block;margin-bottom:10px;color:var(--mut);font-size:13px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;border:1px solid transparent;
+  font-size:14px;font-weight:600;cursor:pointer;text-align:center}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-ok{background:var(--ok);color:#fff}
+.btn-ghost{background:#fff;color:var(--blue);border-color:var(--line)}
+.hint{color:var(--mut);font-size:13px;background:#eef3fc;padding:8px 12px;border-radius:9px;margin:10px 0}
+.chip{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;background:#eef3fc;color:var(--mut);margin:2px}
+.chip-ok{background:#e3f6ec;color:var(--ok)}
+.chip-k{background:#e8efff;color:var(--blue)}
+.chip-m{background:#fdeae6;color:var(--no)}
+
+/* 学段标签 */
+.stage-tabs{display:flex;gap:8px}
+.stage-tab{padding:8px 18px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:700;cursor:pointer;color:var(--mut)}
+.stage-tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.stage-desc{color:var(--mut);font-size:13px;margin:10px 0 4px}
+
+/* 章节树 */
+.grade-block{margin-top:18px}
+.grade-h{font-size:17px;margin:6px 0;border-left:4px solid var(--blue);padding-left:9px}
+.vol-h{font-size:12.5px;color:var(--mut);margin:8px 0 4px}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+.ch-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);display:block}
+.ch-card:hover{transform:translateY(-1px);border-color:var(--blue)}
+.ch-card.locked{opacity:.62;background:#fafbfd}
+.ch-no{font-size:11.5px;color:var(--mut)}
+.ch-title{font-weight:700;font-size:14.5px;margin:2px 0 6px}
+.ch-badges{display:flex;flex-wrap:wrap;gap:3px}
+
+/* 面板 */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-top:14px;box-shadow:var(--shadow)}
+.panel-h{font-size:16px;margin:0 0 10px}
+.learn-head{background:linear-gradient(120deg,#2f6fed,#5b8def);color:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.lh-meta{font-size:12.5px;opacity:.9}
+.lh-title{margin:4px 0;font-size:21px}
+.lh-sum{margin:0;font-size:13.5px;opacity:.95}
+
+/* 方法 */
+.meth-list{display:grid;grid-template-columns:1fr;gap:10px}
+.meth{border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fbfdff}
+.meth-name{font-weight:700;color:var(--blue-d);font-size:15px}
+.meth-desc{color:var(--mut);font-size:13px;margin:3px 0 6px}
+.meth-steps{margin:0;padding-left:20px;font-size:13px}
+.meth-steps li{margin:3px 0}
+.meth-steps b{color:var(--blue-d)}
+
+/* 知识卡 / 思维导图 */
+.know-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:9px;margin:10px 0}
+.know{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fbfdff}
+.know-term{font-weight:700;color:var(--blue-d)}
+.know-def{font-size:13px;margin:3px 0}
+.know-tip{font-size:12px;color:var(--ok);background:#eefaf2;padding:3px 7px;border-radius:7px}
+.mindmap{width:100%;margin:6px 0 10px;border:1px solid var(--line);border-radius:10px}
+.fig{width:100%;border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fff}
+
+/* 题目 / 选项 */
+.q-preview{margin:8px 0}
+.q-item{padding:7px 10px;border:1px dashed var(--line);border-radius:9px;margin:6px 0;font-size:14px}
+.q-idx{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--blue);color:#fff;border-radius:50%;font-size:12px;margin-right:6px}
+.q-text{font-size:16px;font-weight:600;margin:10px 0}
+.opts{display:grid;gap:9px}
+.opt{text-align:left;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;cursor:pointer;font-size:14.5px}
+.opt:hover{border-color:var(--blue)}
+.opt:disabled{cursor:default}
+.opt-right{background:#e3f6ec;border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt-wrong{background:#fdeae6;border-color:var(--no);color:var(--no);font-weight:700}
+.prac-head{font-size:13px;color:var(--mut);font-weight:600}
+.prac-fb,.rev-fb{margin:10px 0;font-size:14px}
+.fb-ok{color:var(--ok);font-weight:700}
+.fb-no{color:var(--no);font-weight:700}
+.fb-exp{color:var(--mut);font-size:13px;margin-top:4px}
+.learn-actions,.summary-actions,.prac-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+/* 错题 / 复习 */
+.page-h{font-size:20px;margin:4px 0 12px}
+.mistake{border:1px solid var(--line);border-radius:13px;padding:13px 14px;margin:11px 0;background:#fff;box-shadow:var(--shadow)}
+.mk-head{font-size:12.5px;color:var(--mut);font-weight:700}
+.mk-q{font-size:15px;font-weight:600;margin:5px 0}
+.mk-ans{font-size:13.5px;margin:4px 0}
+.mk-ans .ok{color:var(--ok)} .mk-ans .no{color:var(--no)}
+.mk-exp{font-size:13px;color:var(--mut);background:#f7f9fd;padding:6px 9px;border-radius:8px}
+.mk-tags{margin:8px 0}
+.tag{padding:5px 11px;border:1px solid var(--line);border-radius:20px;background:#fff;cursor:pointer;font-size:13px;color:var(--mut)}
+.tag.on{background:var(--no);color:#fff;border-color:var(--no)}
+.mk-review{margin:6px 0}
+.ta{width:100%;min-height:48px;margin:6px 0;padding:8px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:13.5px;resize:vertical}
+.mk-actions{display:flex;gap:8px;margin-top:6px}
+.empty{text-align:center;padding:40px 10px;color:var(--mut)}
+.rev-item{border:1px solid var(--line);border-radius:13px;padding:13px;margin:11px 0;background:#fff;box-shadow:var(--shadow)}
+.rev-tag{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:5px}
+.rev-actions{display:flex;gap:8px;margin-top:8px}
+
+/* 进度 */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:8px 0 16px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:var(--shadow)}
+.stat-n{font-size:21px;font-weight:800;color:var(--blue)}
+.stat-l{font-size:12px;color:var(--mut)}
+.prog-row{display:flex;align-items:center;gap:10px;margin:8px 0}
+.prog-name{width:48px;font-weight:600;font-size:13.5px}
+.prog-bar{flex:1;height:10px;background:#e9eef7;border-radius:6px;overflow:hidden}
+.prog-bar i{display:block;height:100%;background:var(--blue)}
+.prog-num{font-size:13px;color:var(--mut);width:48px;text-align:right}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(20px);background:#1f2937;color:#fff;
+  padding:10px 18px;border-radius:11px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* 移动端 */
+@media (max-width:640px){
+  .topbar{flex-wrap:wrap;gap:8px;padding:8px 12px}
+  .nav{gap:3px;width:100%;justify-content:flex-start}
+  .nav-link{padding:6px 9px;font-size:12.5px}
+  .brand-sub{display:none}
+  .view{padding:12px 10px 72px}
+  .ch-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .lh-title{font-size:18px}
+}
+
+/* ============================================================
+ * 融入层新增样式：解题技巧卡 / 动图 / 诊断
+ * ============================================================ */
+
+/* 解题方法卡（来自融会贯通技巧库） */
+.tech-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.tech-method{background:#fbfdff;border:1px solid #e3ebf7;border-radius:12px;padding:14px 14px 16px}
+.tm-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
+.tm-name{font-weight:700;color:#1a3a5f;font-size:15px}
+.tm-grade{font-size:11px;color:#7c8aa0;background:#eef3ff;border-radius:6px;padding:1px 7px;white-space:nowrap}
+.tm-sum{font-size:13px;color:#475569;line-height:1.6;margin-bottom:8px}
+.tm-steps{margin:0;padding-left:20px;font-size:12.5px;color:#334155;line-height:1.7}
+.tm-steps li{margin:2px 0}
+.tm-anim{margin-top:10px;font-size:12.5px}
+.tm-animlink{display:inline-block;margin-top:10px;font-size:12.5px;color:#1677ff;text-decoration:none}
+.tm-animlink:hover{text-decoration:underline}
+/* 「看相关演示」跳入时目标演示卡高亮 */
+.anim-flash{outline:2px solid #1677ff;border-radius:10px;animation:animflash 1.8s ease 1}
+@keyframes animflash{0%{background:rgba(22,119,255,.16)}100%{background:transparent}}
+
+/* 动图盒子 / 画廊 */
+.anim-box{margin-top:10px;border:1px solid #e6edf7;border-radius:10px;background:#fff;padding:8px;min-height:40px;overflow:auto}
+.anim-box svg{display:block;max-width:100%;height:auto}
+.anim-cap{font-size:12px;color:#64748b;margin:4px 2px 8px;line-height:1.5}
+.anim-ctrls{margin:6px 0}
+.anim-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.anim-card{border:1px solid #e3ebf7;border-radius:12px;padding:12px;background:#fff}
+.anim-card-h{font-weight:600;color:#1a3a5f;font-size:14px;margin-bottom:8px}
+
+/* 诊断页 */
+.card{background:#fff;border:1px solid #e3ebf7;border-radius:14px;padding:14px 16px;margin:10px 0}
+.card h3{margin:0 0 10px;font-size:15px;color:#1a3a5f}
+.diag-head{background:linear-gradient(135deg,#eef4ff,#f7fbff)}
+.diag-top{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.diag-mastery{text-align:center}
+.diag-mastery .n{font-size:30px;font-weight:800;color:#2f6fed;line-height:1}
+.diag-mastery .l{font-size:12px;color:#7c8aa0;margin-top:4px}
+.diag-stats{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:#475569}
+.diag-stats b{color:#1a3a5f;font-size:16px}
+.bar{height:10px;background:#e9eef6;border-radius:6px;overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;background:#2f6fed;border-radius:6px;transition:width .4s}
+.bar.mini{height:8px;margin:0;flex:1}
+.bar.mini i.warn{background:#f59e0b}
+.diag-concl .muted{font-size:13.5px;line-height:1.75;color:#475569}
+.stage-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:13px}
+.stage-name{width:170px;flex-shrink:0;color:#1a3a5f;font-weight:600}
+.stage-num{color:#7c8aa0;white-space:nowrap;font-size:12px}
+.muted{color:#64748b;font-size:13px;line-height:1.7}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn.soft{background:#eef3ff;color:#2f6fed}
+.warn{color:#d97706}
+.empty{padding:26px;text-align:center;color:#7c8aa0;background:#f7faff;border:1px dashed #d4e0f2;border-radius:12px}
+
+/* ============================================================
+ * 返回顶部悬浮按钮
+ * ============================================================ */
+#toTop{position:fixed;right:20px;bottom:26px;z-index:60;width:46px;height:46px;border-radius:50%;
+  border:1px solid #d4e0f2;background:#fff;color:var(--blue);font-size:20px;font-weight:800;line-height:1;
+  cursor:pointer;box-shadow:0 6px 18px rgba(47,111,237,.22);opacity:0;visibility:hidden;
+  transform:translateY(12px);transition:opacity .25s,transform .25s,visibility .25s}
+#toTop.show{opacity:1;visibility:visible;transform:translateY(0)}
+#toTop:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+#toTop:active{transform:scale(.94)}
+
+/* ============================================================
+ * 错题卷打印
+ * ============================================================ */
+.print-toolbar{margin:6px 0 4px}
+#printArea{display:none}
+.paper{color:#111;font-size:13px;line-height:1.7}
+.paper-head{text-align:center;border-bottom:2px solid #333;padding-bottom:8px;margin-bottom:14px}
+.paper-title{font-size:20px;font-weight:800;letter-spacing:2px}
+.paper-meta{font-size:12px;color:#555;margin-top:5px}
+.paper-tip{font-size:12px;color:#444;background:#f4f6fa;border:1px solid #ddd;border-radius:6px;
+  padding:6px 10px;margin:10px 0 16px}
+.pq{margin:0 0 14px;page-break-inside:avoid;break-inside:avoid}
+.pq-no{font-weight:700;margin-bottom:3px}
+.pq-q{margin-bottom:5px}
+.pq-opts{display:flex;flex-wrap:wrap;gap:6px 22px;margin-bottom:6px}
+.pq-opt{min-width:120px}
+.pq-blank{border-bottom:1px dashed #bbb;height:22px;margin-top:4px}
+.paper-figs svg{max-width:220px}
+.qr-section{margin-top:22px;border-top:2px dashed #333;padding-top:12px;page-break-inside:avoid;break-inside:avoid}
+.qr-block{margin:14px 0;display:flex;gap:16px;align-items:center;page-break-inside:avoid;break-inside:avoid}
+.qr-block .qr-img{flex:0 0 auto}
+.qr-block .qr-img svg,.qr-block .qr-img img{width:150px;height:150px;display:block}
+.qr-img-src{image-rendering:pixelated}
+.qr-block .qr-txt{font-size:12.5px;color:#222}
+.qr-block .qr-txt b{font-size:14px}
+@media print{
+  html,body{background:#fff}
+  .topbar,.nav,#toTop,#toast,.view{display:none !important}
+  #printArea{display:block !important;position:static;width:100%;max-width:none;margin:0;padding:0}
+  @page{margin:14mm}
+}
+
+/* ============================================================
+ * 扫码复核页
+ * ============================================================ */
+.scan-head{background:linear-gradient(120deg,#2f6fed,#5b8def);color:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.scan-head h1{margin:0 0 4px;font-size:20px}
+.scan-head p{margin:0;font-size:13px;opacity:.95}
+.sc-item{border:1px solid var(--line);border-radius:13px;padding:13px 14px;margin:11px 0;background:#fff;box-shadow:var(--shadow);transition:.15s}
+.sc-item.wrong{border-color:var(--no);background:#fff7f5}
+.sc-item .sc-no{font-weight:700;color:var(--blue-d);margin-right:4px}
+.sc-q{font-size:15px;font-weight:600;margin:5px 0}
+.sc-ans{font-size:13.5px;color:var(--ok);margin:4px 0}
+.sc-ans b{color:var(--ok)}
+.sc-exp{font-size:12.5px;color:var(--mut);background:#f7f9fd;padding:6px 9px;border-radius:8px;margin:4px 0}
+.sc-check{display:inline-flex;align-items:center;gap:8px;margin-top:8px;cursor:pointer;font-weight:700;color:var(--no);user-select:none}
+.sc-check input{width:18px;height:18px}
+.scan-bar{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;box-shadow:0 -4px 14px rgba(31,41,55,.06)}
+.scan-bar .cnt{color:var(--mut);font-size:13.5px;margin-right:auto}
+
+/* ============================================================
+ * 奥数题库（按年级的专题网格）
+ * ============================================================ */
+.oly-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:6px}
+.oly-topic{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px;transition:.15s}
+.oly-topic:hover{transform:translateY(-1px);border-color:var(--blue)}
+.oly-topic-n{font-weight:700;font-size:15px;color:var(--blue-d)}
+.oly-topic-w{font-size:11px;font-weight:700;color:#7c3aed;background:#f3ecff;border-radius:20px;padding:1px 8px;align-self:flex-start;letter-spacing:.5px}
+.oly-topic-d{font-size:12.5px;color:var(--mut);line-height:1.5;flex:1}
+.oly-topic-go{font-size:12.5px;font-weight:700;color:var(--blue);margin-top:2px}
+.oly-head{background:linear-gradient(120deg,#7c3aed,#a855f7);color:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.oly-head h1{margin:0 0 4px;font-size:20px}
+.oly-head p{margin:0;font-size:13px;opacity:.95}
+.oly-topic-tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:20px;background:#f3ecff;color:#7c3aed;margin-left:6px;vertical-align:middle}
+
+body{background:#f4f7fb;margin:0;padding:18px}
+.pv-wrap{max-width:1080px;margin:0 auto}
+.pv-title{font-size:22px;font-weight:800;color:#1a3a5f;margin:6px 0 2px}
+.pv-sub{color:#64748b;font-size:13px;margin-bottom:16px}
+.pv-sec{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:18px;box-shadow:0 1px 3px rgba(16,24,40,.05)}
+.pv-h{font-size:16px;font-weight:800;color:#7c3aed;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.pv-h span{background:#f3ecff;border-radius:20px;font-size:12px;padding:2px 9px;color:#7c3aed;font-weight:700}
+.pv-note{font-size:12.5px;color:#64748b;line-height:1.7;background:#f8fafc;border:1px dashed #dbe3ee;border-radius:10px;padding:10px 12px;margin-top:10px}
+.paper{border:1px solid #cbd5e1;border-radius:10px;padding:16px}
+</style></head>
+<body><div class="pv-wrap">
+<div class="pv-title">人教版数学 · 章节同步教练</div>
+<div class="pv-sub">静态预览 · 由项目真实代码（js/olympiad.js + js/oly-syllabus.js + js/app.js + styles.css）渲染生成</div>
+
+<div class="pv-sec"><div class="pv-h"><span>①</span>奥数题库 · 按教材专题分类（三年级）</div>
+<div class="pv-note">专题分类与编号对齐《小学奥数举一反三》：每册 40 周、共 6 册 240 个专题。页面只收录<b>专题目录</b>（周次与专题名），不复制任何原书题目。</div>
+<a class="back" href="#/home">← 返回主线</a>
+    <div class="oly-head"><h1>奥数题库 · 按教材专题分类</h1>
+      <p>专题分类与编号对齐《小学奥数举一反三》（每册 40 周、共 6 册 240 个专题）；题目由参数化引擎现场生成，每遍不重样。</p></div>
+    <p class="hint">仅收录教材的<b>专题目录</b>（周次与专题名），不复制任何原书题目；题目全部原创同题型，可放心使用。答错的题会自动进入 <a href="javascript:void(0)" data-link="#/mistakes">错题本</a>，并与章节题一样支持打印错题卷、间隔复习。</p>
+    <div class="stage-tabs"><button class="stage-tab " data-g="1">一年级</button><button class="stage-tab " data-g="2">二年级</button><button class="stage-tab on" data-g="3">三年级</button><button class="stage-tab " data-g="4">四年级</button><button class="stage-tab " data-g="5">五年级</button><button class="stage-tab " data-g="6">六年级</button></div>
+    <div class="row" style="margin:12px 0">
+      <a class="btn btn-primary" href="#/oly/p/3">🎯 三年级综合练习（40 个专题随机出题）</a>
+    </div>
+    <div class="oly-grid"><div class="oly-topic">
+      <div class="oly-topic-w">第 1 周</div>
+      <div class="oly-topic-n">数数图形</div>
+      <div class="oly-topic-d">按顺序数出指定图形的个数</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w1">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 2 周</div>
+      <div class="oly-topic-n">寻找规律</div>
+      <div class="oly-topic-d">等差、等比、加减交替</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w2">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 3 周</div>
+      <div class="oly-topic-n">加减巧算</div>
+      <div class="oly-topic-d">凑整巧算</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w3">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 4 周</div>
+      <div class="oly-topic-n">巧添符号</div>
+      <div class="oly-topic-d">选择合适的运算符号</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w4">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 5 周</div>
+      <div class="oly-topic-n">算式之谜</div>
+      <div class="oly-topic-d">符号代表的数</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w5">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 6 周</div>
+      <div class="oly-topic-n">文字之谜</div>
+      <div class="oly-topic-d">汉字算式求代表数</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w6">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 7 周</div>
+      <div class="oly-topic-n">填数游戏</div>
+      <div class="oly-topic-d">口算填未知数</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w7">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 8 周</div>
+      <div class="oly-topic-n">有余除法</div>
+      <div class="oly-topic-d">有余数的除法</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w8">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 9 周</div>
+      <div class="oly-topic-n">周期问题</div>
+      <div class="oly-topic-d">看余数定位第 n 个</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w9">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 10 周</div>
+      <div class="oly-topic-n">数学趣题</div>
+      <div class="oly-topic-d">巧解趣味题</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w10">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 11 周</div>
+      <div class="oly-topic-n">火柴游戏</div>
+      <div class="oly-topic-d">摆正方形用几根火柴</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w11">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 12 周</div>
+      <div class="oly-topic-n">乘法速算</div>
+      <div class="oly-topic-d">×11 的速算</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w12">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 13 周</div>
+      <div class="oly-topic-n">乘除巧算</div>
+      <div class="oly-topic-d">凑整巧算</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w13">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 14 周</div>
+      <div class="oly-topic-n">解决问题（一）</div>
+      <div class="oly-topic-d">三步计算的应用题</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w14">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 15 周</div>
+      <div class="oly-topic-n">解决问题（二）</div>
+      <div class="oly-topic-d">三步计算的应用题</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w15">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 16 周</div>
+      <div class="oly-topic-n">植树问题</div>
+      <div class="oly-topic-d">两端都栽 / 只栽一端 / 环形</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w16">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 17 周</div>
+      <div class="oly-topic-n">数字趣谈</div>
+      <div class="oly-topic-d">数位之间的关系</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w17">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 18 周</div>
+      <div class="oly-topic-n">重叠问题</div>
+      <div class="oly-topic-d">两集合重叠</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w18">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 19 周</div>
+      <div class="oly-topic-n">简单枚举</div>
+      <div class="oly-topic-d">有序排列不重不漏</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w19">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 20 周</div>
+      <div class="oly-topic-n">等量代换</div>
+      <div class="oly-topic-d">图文算式，先求一种图形</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w20">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 21 周</div>
+      <div class="oly-topic-n">错中求解</div>
+      <div class="oly-topic-d">看错的数带来多大偏差</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w21">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 22 周</div>
+      <div class="oly-topic-n">“对应”解题</div>
+      <div class="oly-topic-d">消去法求单价</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w22">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 23 周</div>
+      <div class="oly-topic-n">盈亏问题</div>
+      <div class="oly-topic-d">盈 + 亏 ÷ 每份差</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w23">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 24 周</div>
+      <div class="oly-topic-n">简单推理（一）</div>
+      <div class="oly-topic-d">把条件串成一条链</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w24">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 25 周</div>
+      <div class="oly-topic-n">和倍问题</div>
+      <div class="oly-topic-d">和 ÷ (倍数 + 1)</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w25">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 26 周</div>
+      <div class="oly-topic-n">差倍问题（一）</div>
+      <div class="oly-topic-d">差 ÷ (倍数 − 1)</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w26">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 27 周</div>
+      <div class="oly-topic-n">差倍问题（二）</div>
+      <div class="oly-topic-d">差 ÷ (倍数 − 1)</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w27">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 28 周</div>
+      <div class="oly-topic-n">和差问题</div>
+      <div class="oly-topic-d">(和 ± 差) ÷ 2</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w28">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 29 周</div>
+      <div class="oly-topic-n">年龄问题</div>
+      <div class="oly-topic-d">几年后年龄是几倍</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w29">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 30 周</div>
+      <div class="oly-topic-n">“还原”解题</div>
+      <div class="oly-topic-d">从结果一步步倒推</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w30">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 31 周</div>
+      <div class="oly-topic-n">“假设”解题</div>
+      <div class="oly-topic-d">假设法求两种量</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w31">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 32 周</div>
+      <div class="oly-topic-n">平均数问题（一）</div>
+      <div class="oly-topic-d">总数 ÷ 个数</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w32">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 33 周</div>
+      <div class="oly-topic-n">平均数问题（二）</div>
+      <div class="oly-topic-d">总数 ÷ 个数</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w33">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 34 周</div>
+      <div class="oly-topic-n">简单推理（二）</div>
+      <div class="oly-topic-d">把条件串成一条链</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w34">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 35 周</div>
+      <div class="oly-topic-n">巧求周长（一）</div>
+      <div class="oly-topic-d">长方形、正方形与拼接</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w35">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 36 周</div>
+      <div class="oly-topic-n">巧求周长（二）</div>
+      <div class="oly-topic-d">长方形、正方形与拼接</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w36">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 37 周</div>
+      <div class="oly-topic-n">面积计算</div>
+      <div class="oly-topic-d">长方形、正方形、三角形面积</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w37">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 38 周</div>
+      <div class="oly-topic-n">最佳安排</div>
+      <div class="oly-topic-d">能同时做的事并行</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w38">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 39 周</div>
+      <div class="oly-topic-n">抽屉原理</div>
+      <div class="oly-topic-d">最不利情况 + 1</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w39">开始练习 →</a>
+    </div><div class="oly-topic">
+      <div class="oly-topic-w">第 40 周</div>
+      <div class="oly-topic-n">一题多解</div>
+      <div class="oly-topic-d">本年级专题综合练习</div>
+      <a class="oly-topic-go" href="#/oly/p/3/g3w40">开始练习 →</a>
+    </div></div></div>
+
+<div class="pv-sec"><div class="pv-h"><span>②</span>专题练习 · 三年级 第16周「植树问题」</div>
+<div class="pv-note">点击选项即时判分；答错的题自动进入错题本，并纳入间隔复习。下方为“答错”后的真实状态。</div>
+<a class="back" href="#/oly/g/3">← 返回奥数题库</a>
+    <div class="prac-head">第 1 / 8 题 · 三年级 · 第 16 周 植树问题</div><div class="q-text">一条 80 米长的路，每隔 10 米栽一棵树（两端都栽），一共需要多少棵树？</div><div class="opts"><button class="opt opt-wrong" data-i="0">6</button><button class="opt" data-i="1">10</button><button class="opt" data-i="2">8</button><button class="opt opt-right" data-i="3">9</button></div><div class="prac-fb" id="fb"><div class="fb-no">✗ 答错了，已记入错题本</div><div class="fb-exp">间隔数 = 80 ÷ 10 = 8；两端都栽：棵数 = 间隔数 + 1 = 9。</div></div>
+    <div class="prac-nav"><button class="btn btn-ghost" id="nextBtn" disabled>下一题 →</button></div></div>
+
+<div class="pv-sec"><div class="pv-h"><span>③</span>错题本 · 章节题与奥数题统一管理</div>
+<div class="pv-note">奥数题以「奥数·三年级·第16周 植树问题」形式归位，与章节题共用同一套错题/复习/打印闭环。</div>
+<a class="back" href="#/home">← 返回主线</a>
+    <h1 class="page-h">错题本（1）</h1><div class="print-toolbar">
+      <button class="btn btn-primary" id="btnPrint">🖨️ 打印错题卷（1 题 · 附核对二维码）</button>
+      <p class="hint">点击后生成纸质卷子并打印，<b>同时清空当前错题库</b>；孩子做完后，家长扫描卷尾二维码，勾选“又做错”的题即可重新入库。</p>
+    </div><div class="mistake" data-id="oly:3:g3w16#g3w16#dh04kk">
+      <div class="mk-head">奥数·三年级·第16周 植树问题</div>
+      <div class="mk-q">一条 80 米长的路，每隔 10 米栽一棵树（两端都栽），一共需要多少棵树？</div>
+      <div class="mk-ans">你的答案：<b class="no">6</b> ｜ 正确：<b class="ok">9</b></div>
+      <div class="mk-exp">解析：间隔数 = 80 ÷ 10 = 8；两端都栽：棵数 = 间隔数 + 1 = 9。</div>
+      <div class="mk-tags">错因：<button class="tag " data-tag="concept">概念不清</button><button class="tag " data-tag="calc">计算失误</button><button class="tag " data-tag="read">审题偏差</button><button class="tag " data-tag="idea">思路错误</button></div>
+      <details class="mk-review"><summary>三问复盘</summary>
+        <textarea class="ta" data-f="why" placeholder="① 为什么错？"></textarea>
+        <textarea class="ta" data-f="right" placeholder="② 正确思路是什么？"></textarea>
+        <textarea class="ta" data-f="how" placeholder="③ 以后怎么避免？"></textarea>
+      </details>
+      <div class="mk-actions">
+        <button class="btn btn-primary mk-save">保存复盘</button>
+        <button class="btn btn-ghost mk-practice">重做本题</button>
+      </div>
+    </div></div>
+
+<div class="pv-sec"><div class="pv-h"><span>④</span>打印错题卷 · 卷尾附核对二维码</div>
+<div class="pv-note">卷子只印题目（不印答案）；卷尾二维码内含正确答案与解析。打印的同时清空电子错题本，家长扫二维码进入核对页勾选“又做错了”即可重新入库。</div>
+<div class="paper">
+    <div class="paper-head">
+      <div class="paper-title">错 题 重 做 卷</div>
+      <div class="paper-meta">共 1 题 · 生成日期 2026-10-10 · 人教版数学 · 章节同步教练</div>
+    </div>
+    <div class="paper-tip">说明：请在横线上作答或写过程。做完交给家长，家长扫描卷尾二维码逐批核对，把再次做错的题重新加入错题本。（本卷打印后，电子错题本已同步清空。）</div><div class="pq">
+      <div class="pq-no">1.（三年级·第16周 植树问题）</div>
+      <div class="pq-q">一条 80 米长的路，每隔 10 米栽一棵树（两端都栽），一共需要多少棵树？</div><div class="pq-opts"><span class="pq-opt">A. 6</span><span class="pq-opt">B. 10</span><span class="pq-opt">C. 8</span><span class="pq-opt">D. 9</span></div><div class="pq-blank"></div></div><div class="qr-section"><div style="font-weight:700;margin-bottom:6px">家长核对区 · 扫码核对又做错的题</div><div class="qr-block">
+      <div class="qr-img"><img class="qr-img-src" alt="错题核对二维码" src="data:image/gif;base64,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"/></div>
+      <div class="qr-txt">
+        <b>第 1 / 1 批 · 第 1–1 题（共 1 题）</b><br>
+        用手机扫描此二维码进入核对页，勾选孩子<b>再次做错</b>的题目，确认后自动重新加入错题本。
+      </div></div></div></div></div>
+
+<div class="pv-note">提示：本页是静态快照，交互（点击选项、切换年级、扫码）请在 <b>index.html</b> 中体验。</div>
+</div></body></html>

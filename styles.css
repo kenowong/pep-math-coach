@@ -1,0 +1,307 @@
+/* 人教版数学 · 章节同步教练 —— 样式（浅色、紧凑、移动端友好） */
+:root{
+  --blue:#2f6fed; --blue-d:#1a3a5f; --ok:#2e9e5b; --no:#e0533d;
+  --bg:#f3f6fc; --card:#fff; --line:#e3e9f3; --txt:#1f2937; --mut:#6b7787;
+  --shadow:0 1px 3px rgba(31,41,55,.08),0 4px 14px rgba(31,41,55,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--txt); font-size:15px; line-height:1.6;
+  -webkit-text-size-adjust:100%;
+}
+a{color:var(--blue);text-decoration:none}
+img,svg{max-width:100%}
+/* 全局安全网：禁止横向溢出，清理移动端点击高亮，长文本可断行 */
+html,body{overflow-x:hidden}
+a,button,input,textarea,label,.opt,.tag,.nav-link{-webkit-tap-highlight-color:transparent}
+.q-text,.pq-q,.mk-q,.sc-q,.tech-method,.know-def,.meth-desc,.meth-steps,.tm-steps,.oly-topic-d{overflow-wrap:anywhere;word-break:break-word}
+.ch-grid,.oly-grid,.tech-list,.anim-gallery,.know-cards,.opts,.row{grid-auto-flow:row}
+
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;
+  padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:9px}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+.brand-title{font-weight:700;font-size:15px;line-height:1.1}
+.brand-sub{font-size:11px;color:var(--mut)}
+.nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-link{position:relative;padding:7px 11px;border-radius:9px;color:var(--mut);font-size:13.5px;font-weight:600}
+.nav-link:hover{background:#eef3fc;color:var(--blue)}
+.nav-link.active{background:var(--blue);color:#fff}
+.badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;
+  background:var(--no);color:#fff;font-size:11px;line-height:17px;text-align:center;display:none}
+.badge.show{display:block}
+
+.view{max-width:880px;margin:0 auto;padding:16px 14px 70px}
+
+/* 通用 */
+.back{display:inline-block;margin-bottom:10px;color:var(--mut);font-size:13px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;border:1px solid transparent;
+  font-size:14px;font-weight:600;cursor:pointer;text-align:center}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-ok{background:var(--ok);color:#fff}
+.btn-ghost{background:#fff;color:var(--blue);border-color:var(--line)}
+.hint{color:var(--mut);font-size:13px;background:#eef3fc;padding:8px 12px;border-radius:9px;margin:10px 0}
+.chip{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;background:#eef3fc;color:var(--mut);margin:2px}
+.chip-ok{background:#e3f6ec;color:var(--ok)}
+.chip-k{background:#e8efff;color:var(--blue)}
+.chip-m{background:#fdeae6;color:var(--no)}
+
+/* 学段标签 */
+.stage-tabs{display:flex;gap:8px}
+.stage-tab{padding:8px 18px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:700;cursor:pointer;color:var(--mut)}
+.stage-tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.stage-desc{color:var(--mut);font-size:13px;margin:10px 0 4px}
+
+/* 章节树 */
+.grade-block{margin-top:18px}
+.grade-h{font-size:17px;margin:6px 0;border-left:4px solid var(--blue);padding-left:9px}
+.vol-h{font-size:12.5px;color:var(--mut);margin:8px 0 4px}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+.ch-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);display:block}
+.ch-card:hover{transform:translateY(-1px);border-color:var(--blue)}
+.ch-card.locked{opacity:.62;background:#fafbfd}
+.ch-no{font-size:11.5px;color:var(--mut)}
+.ch-title{font-weight:700;font-size:14.5px;margin:2px 0 6px}
+.ch-badges{display:flex;flex-wrap:wrap;gap:3px}
+
+/* 面板 */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-top:14px;box-shadow:var(--shadow)}
+.panel-h{font-size:16px;margin:0 0 10px}
+.learn-head{background:linear-gradient(120deg,#2f6fed,#5b8def);color:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.lh-meta{font-size:12.5px;opacity:.9}
+.lh-title{margin:4px 0;font-size:21px}
+.lh-sum{margin:0;font-size:13.5px;opacity:.95}
+
+/* 方法 */
+.meth-list{display:grid;grid-template-columns:1fr;gap:10px}
+.meth{border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fbfdff}
+.meth-name{font-weight:700;color:var(--blue-d);font-size:15px}
+.meth-desc{color:var(--mut);font-size:13px;margin:3px 0 6px}
+.meth-steps{margin:0;padding-left:20px;font-size:13px}
+.meth-steps li{margin:3px 0}
+.meth-steps b{color:var(--blue-d)}
+
+/* 知识卡 / 思维导图 */
+.know-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:9px;margin:10px 0}
+.know{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fbfdff}
+.know-term{font-weight:700;color:var(--blue-d)}
+.know-def{font-size:13px;margin:3px 0}
+.know-tip{font-size:12px;color:var(--ok);background:#eefaf2;padding:3px 7px;border-radius:7px}
+.mindmap{width:100%;margin:6px 0 10px;border:1px solid var(--line);border-radius:10px}
+.fig{width:100%;border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fff}
+
+/* 题目 / 选项 */
+.q-preview{margin:8px 0}
+.q-item{padding:7px 10px;border:1px dashed var(--line);border-radius:9px;margin:6px 0;font-size:14px}
+.q-idx{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--blue);color:#fff;border-radius:50%;font-size:12px;margin-right:6px}
+.q-text{font-size:16px;font-weight:600;margin:10px 0}
+.opts{display:grid;gap:9px}
+.opt{text-align:left;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;cursor:pointer;font-size:14.5px}
+.opt:hover{border-color:var(--blue)}
+.opt:disabled{cursor:default}
+.opt-right{background:#e3f6ec;border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt-wrong{background:#fdeae6;border-color:var(--no);color:var(--no);font-weight:700}
+.prac-head{font-size:13px;color:var(--mut);font-weight:600}
+.prac-fb,.rev-fb{margin:10px 0;font-size:14px}
+.fb-ok{color:var(--ok);font-weight:700}
+.fb-no{color:var(--no);font-weight:700}
+.fb-exp{color:var(--mut);font-size:13px;margin-top:4px}
+.learn-actions,.summary-actions,.prac-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+/* 错题 / 复习 */
+.page-h{font-size:20px;margin:4px 0 12px}
+.mistake{border:1px solid var(--line);border-radius:13px;padding:13px 14px;margin:11px 0;background:#fff;box-shadow:var(--shadow)}
+.mk-head{font-size:12.5px;color:var(--mut);font-weight:700}
+.mk-q{font-size:15px;font-weight:600;margin:5px 0}
+.mk-ans{font-size:13.5px;margin:4px 0}
+.mk-ans .ok{color:var(--ok)} .mk-ans .no{color:var(--no)}
+.mk-exp{font-size:13px;color:var(--mut);background:#f7f9fd;padding:6px 9px;border-radius:8px}
+.mk-tags{margin:8px 0}
+.tag{padding:5px 11px;border:1px solid var(--line);border-radius:20px;background:#fff;cursor:pointer;font-size:13px;color:var(--mut)}
+.tag.on{background:var(--no);color:#fff;border-color:var(--no)}
+.mk-review{margin:6px 0}
+.ta{width:100%;min-height:48px;margin:6px 0;padding:8px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:13.5px;resize:vertical}
+.mk-actions{display:flex;gap:8px;margin-top:6px}
+.empty{text-align:center;padding:40px 10px;color:var(--mut)}
+.rev-item{border:1px solid var(--line);border-radius:13px;padding:13px;margin:11px 0;background:#fff;box-shadow:var(--shadow)}
+.rev-tag{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:5px}
+.rev-actions{display:flex;gap:8px;margin-top:8px}
+
+/* 进度 */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:8px 0 16px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:var(--shadow)}
+.stat-n{font-size:21px;font-weight:800;color:var(--blue)}
+.stat-l{font-size:12px;color:var(--mut)}
+.prog-row{display:flex;align-items:center;gap:10px;margin:8px 0}
+.prog-name{width:48px;font-weight:600;font-size:13.5px}
+.prog-bar{flex:1;height:10px;background:#e9eef7;border-radius:6px;overflow:hidden}
+.prog-bar i{display:block;height:100%;background:var(--blue)}
+.prog-num{font-size:13px;color:var(--mut);width:48px;text-align:right}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(20px);background:#1f2937;color:#fff;
+  padding:10px 18px;border-radius:11px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* 移动端 */
+@media (max-width:640px){
+  /* 顶栏单行，导航改为横向滚动，避免 7 个链接折行撑高顶栏 */
+  .topbar{flex-wrap:nowrap;overflow:hidden;gap:8px;padding:8px 12px}
+  .brand{flex:0 0 auto;min-width:0}
+  .nav{width:auto;margin-left:auto;flex:1 1 auto;min-width:0;flex-wrap:nowrap;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;gap:2px;padding-bottom:2px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav-link{flex:0 0 auto;white-space:nowrap;padding:6px 9px;font-size:12.5px}
+  .brand-sub{display:none}
+  .view{padding:12px 10px 72px}
+  .ch-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+  /* 奥数网格在手机上补两列断点，与章节网格观感统一 */
+  .oly-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  /* 诊断页固定宽阶段名在窄屏收窄，避免挤占进度条 */
+  .stage-name{width:108px}
+  .stage-row{gap:8px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .lh-title{font-size:18px}
+}
+
+/* 超窄屏（≤360px）进一步收紧间距 */
+@media (max-width:360px){
+  .nav-link{padding:6px 7px;font-size:12px}
+  .oly-grid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+  .view{padding:10px 8px 70px}
+}
+
+/* ============================================================
+ * 融入层新增样式：解题技巧卡 / 动图 / 诊断
+ * ============================================================ */
+
+/* 解题方法卡（来自融会贯通技巧库） */
+.tech-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.tech-method{background:#fbfdff;border:1px solid #e3ebf7;border-radius:12px;padding:14px 14px 16px}
+.tm-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
+.tm-name{font-weight:700;color:#1a3a5f;font-size:15px}
+.tm-grade{font-size:11px;color:#7c8aa0;background:#eef3ff;border-radius:6px;padding:1px 7px;white-space:nowrap}
+.tm-sum{font-size:13px;color:#475569;line-height:1.6;margin-bottom:8px}
+.tm-steps{margin:0;padding-left:20px;font-size:12.5px;color:#334155;line-height:1.7}
+.tm-steps li{margin:2px 0}
+.tm-anim{margin-top:10px;font-size:12.5px}
+.tm-animlink{display:inline-block;margin-top:10px;font-size:12.5px;color:#1677ff;text-decoration:none}
+.tm-animlink:hover{text-decoration:underline}
+/* 「看相关演示」跳入时目标演示卡高亮 */
+.anim-flash{outline:2px solid #1677ff;border-radius:10px;animation:animflash 1.8s ease 1}
+@keyframes animflash{0%{background:rgba(22,119,255,.16)}100%{background:transparent}}
+
+/* 动图盒子 / 画廊 */
+.anim-box{margin-top:10px;border:1px solid #e6edf7;border-radius:10px;background:#fff;padding:8px;min-height:40px;overflow:auto}
+.anim-box svg{display:block;max-width:100%;height:auto}
+.anim-cap{font-size:12px;color:#64748b;margin:4px 2px 8px;line-height:1.5}
+.anim-ctrls{margin:6px 0}
+.anim-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.anim-card{border:1px solid #e3ebf7;border-radius:12px;padding:12px;background:#fff}
+.anim-card-h{font-weight:600;color:#1a3a5f;font-size:14px;margin-bottom:8px}
+
+/* 诊断页 */
+.card{background:#fff;border:1px solid #e3ebf7;border-radius:14px;padding:14px 16px;margin:10px 0}
+.card h3{margin:0 0 10px;font-size:15px;color:#1a3a5f}
+.diag-head{background:linear-gradient(135deg,#eef4ff,#f7fbff)}
+.diag-top{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.diag-mastery{text-align:center}
+.diag-mastery .n{font-size:30px;font-weight:800;color:#2f6fed;line-height:1}
+.diag-mastery .l{font-size:12px;color:#7c8aa0;margin-top:4px}
+.diag-stats{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:#475569}
+.diag-stats b{color:#1a3a5f;font-size:16px}
+.bar{height:10px;background:#e9eef6;border-radius:6px;overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;background:#2f6fed;border-radius:6px;transition:width .4s}
+.bar.mini{height:8px;margin:0;flex:1}
+.bar.mini i.warn{background:#f59e0b}
+.diag-concl .muted{font-size:13.5px;line-height:1.75;color:#475569}
+.stage-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:13px}
+.stage-name{width:170px;flex-shrink:0;color:#1a3a5f;font-weight:600}
+.stage-num{color:#7c8aa0;white-space:nowrap;font-size:12px}
+.muted{color:#64748b;font-size:13px;line-height:1.7}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn.soft{background:#eef3ff;color:#2f6fed}
+.warn{color:#d97706}
+.empty{padding:26px;text-align:center;color:#7c8aa0;background:#f7faff;border:1px dashed #d4e0f2;border-radius:12px}
+
+/* ============================================================
+ * 返回顶部悬浮按钮
+ * ============================================================ */
+#toTop{position:fixed;right:16px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:60;width:46px;height:46px;border-radius:50%;
+  border:1px solid #d4e0f2;background:#fff;color:var(--blue);font-size:20px;font-weight:800;line-height:1;
+  cursor:pointer;box-shadow:0 6px 18px rgba(47,111,237,.22);opacity:0;visibility:hidden;
+  transform:translateY(12px);transition:opacity .25s,transform .25s,visibility .25s}
+/* 扫码核对页底部已有 sticky 操作栏，悬浮按钮会让其难点中，故隐藏 */
+body[data-route="scan"] #toTop{display:none !important}
+#toTop.show{opacity:1;visibility:visible;transform:translateY(0)}
+#toTop:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+#toTop:active{transform:scale(.94)}
+
+/* ============================================================
+ * 错题卷打印
+ * ============================================================ */
+.print-toolbar{margin:6px 0 4px}
+#printArea{display:none}
+.paper{color:#111;font-size:13px;line-height:1.7}
+.paper-head{text-align:center;border-bottom:2px solid #333;padding-bottom:8px;margin-bottom:14px}
+.paper-title{font-size:20px;font-weight:800;letter-spacing:2px}
+.paper-meta{font-size:12px;color:#555;margin-top:5px}
+.paper-tip{font-size:12px;color:#444;background:#f4f6fa;border:1px solid #ddd;border-radius:6px;
+  padding:6px 10px;margin:10px 0 16px}
+.pq{margin:0 0 14px;page-break-inside:avoid;break-inside:avoid}
+.pq-no{font-weight:700;margin-bottom:3px}
+.pq-q{margin-bottom:5px}
+.pq-opts{display:flex;flex-wrap:wrap;gap:6px 22px;margin-bottom:6px}
+.pq-opt{min-width:120px}
+.pq-blank{border-bottom:1px dashed #bbb;height:22px;margin-top:4px}
+.paper-figs svg{max-width:220px}
+.qr-section{margin-top:22px;border-top:2px dashed #333;padding-top:12px;page-break-inside:avoid;break-inside:avoid}
+.qr-block{margin:14px 0;display:flex;gap:16px;align-items:center;page-break-inside:avoid;break-inside:avoid}
+.qr-block .qr-img{flex:0 0 auto}
+.qr-block .qr-img svg,.qr-block .qr-img img{width:150px;height:150px;display:block}
+.qr-img-src{image-rendering:pixelated}
+.qr-block .qr-txt{font-size:12.5px;color:#222}
+.qr-block .qr-txt b{font-size:14px}
+@media print{
+  html,body{background:#fff}
+  .topbar,.nav,#toTop,#toast,.view{display:none !important}
+  #printArea{display:block !important;position:static;width:100%;max-width:none;margin:0;padding:0}
+  @page{margin:14mm}
+}
+
+/* ============================================================
+ * 扫码复核页
+ * ============================================================ */
+.scan-head{background:linear-gradient(120deg,#2f6fed,#5b8def);color:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.scan-head h1{margin:0 0 4px;font-size:20px}
+.scan-head p{margin:0;font-size:13px;opacity:.95}
+.sc-item{border:1px solid var(--line);border-radius:13px;padding:13px 14px;margin:11px 0;background:#fff;box-shadow:var(--shadow);transition:.15s}
+.sc-item.wrong{border-color:var(--no);background:#fff7f5}
+.sc-item .sc-no{font-weight:700;color:var(--blue-d);margin-right:4px}
+.sc-q{font-size:15px;font-weight:600;margin:5px 0}
+.sc-ans{font-size:13.5px;color:var(--ok);margin:4px 0}
+.sc-ans b{color:var(--ok)}
+.sc-exp{font-size:12.5px;color:var(--mut);background:#f7f9fd;padding:6px 9px;border-radius:8px;margin:4px 0}
+.sc-check{display:inline-flex;align-items:center;gap:8px;margin-top:8px;cursor:pointer;font-weight:700;color:var(--no);user-select:none}
+.sc-check input{width:18px;height:18px}
+.scan-bar{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px calc(12px + env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) calc(12px + env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center;flex-wrap:wrap;box-shadow:0 -4px 14px rgba(31,41,55,.06)}
+.scan-bar .cnt{color:var(--mut);font-size:13.5px;margin-right:auto}
+
+/* ============================================================
+ * 奥数题库（按年级的专题网格）
+ * ============================================================ */
+.oly-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:6px}
+.oly-topic{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px;transition:.15s}
+.oly-topic:hover{transform:translateY(-1px);border-color:var(--blue)}
+.oly-topic-n{font-weight:700;font-size:15px;color:var(--blue-d)}
+.oly-topic-w{font-size:11px;font-weight:700;color:#7c3aed;background:#f3ecff;border-radius:20px;padding:1px 8px;align-self:flex-start;letter-spacing:.5px}
+.oly-topic-d{font-size:12.5px;color:var(--mut);line-height:1.5;flex:1}
+.oly-topic-go{font-size:12.5px;font-weight:700;color:var(--blue);margin-top:2px}
+.oly-head{background:linear-gradient(120deg,#7c3aed,#a855f7);color:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.oly-head h1{margin:0 0 4px;font-size:20px}
+.oly-head p{margin:0;font-size:13px;opacity:.95}
+.oly-topic-tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:20px;background:#f3ecff;color:#7c3aed;margin-left:6px;vertical-align:middle}
